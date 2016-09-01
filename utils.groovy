@@ -1,5 +1,4 @@
-
-def extendEnv(env) {
+def extendEnv() {
   env.FOO = 1
 }
 
