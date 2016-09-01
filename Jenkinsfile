@@ -4,6 +4,8 @@
 prodRepo = 'git@github.com:afrobot/jenkins-prod.git'
 
 node {
+  echo env.inspect()
+
   stage 'checkout'
     checkout scm
     currSHA1 = sh(returnStdout: true, script: 'git rev-parse HEAD').trim()
