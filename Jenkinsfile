@@ -43,7 +43,7 @@ node {
 //   }
 //   }
 //
-def addRemoteRepo(devRepo, prodRepo) {
+def checkoutRepo(devRepo, prodRepo) {
   checkout([
     $class:'GitSCM',
     branches: [[name: 'master']],
