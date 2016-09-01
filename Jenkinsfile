@@ -2,5 +2,5 @@
 
 node {
   stage 'build'
-  chechkout scm
+  checkout scm
 }
