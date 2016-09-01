@@ -1,6 +1,7 @@
 #!/usr/bin/env groovy
 
+stage 'build'
+
 node {
-  stage 'build'
   checkout scm
 }
