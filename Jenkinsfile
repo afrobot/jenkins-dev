@@ -4,7 +4,7 @@
 prodRepo = 'git@github.com:afrobot/jenkins-prod.git'
 
 node {
-  echo env.inspect()
+  echo env.dump()
 
   stage 'checkout'
     checkout scm
