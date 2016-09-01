@@ -26,7 +26,7 @@ node {
     // checkout again to correct sha1
     checkout scm
 
-    sh 'git show-ref'
+    sh 'git show-ref --head'
   }
 
 }
