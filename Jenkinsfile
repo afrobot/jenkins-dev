@@ -1,7 +1,9 @@
 #!/usr/bin/env groovy
 
-node {
-  echo "Hello World"
+stage "build" {
+  node {
+    env.each { name, value -> println "Name: $name -> Value $value" }
+    sh "git remote -v"
+  }
 
-  sh "git remote -v"
 }
