@@ -2,5 +2,5 @@
 
 node {
   echo "Hello World"
-  sleep 10
+  sleep 5
 }
