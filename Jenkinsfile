@@ -3,10 +3,12 @@
 devRepo = 'git@github.com:afrobot/jenkins-dev.git'
 prodRepo = 'git@github.com:afrobot/jenkins-prod.git'
 
+def foo
+
 node {
   stage("bootstrap") {
     checkout scm
-    foo = load '@script/utils.groovy'
+    foo = load 'utils.groovy'
     foo.extendEnv(env)
 
     echo env.FOO
