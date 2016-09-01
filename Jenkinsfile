@@ -26,7 +26,15 @@ node {
     // checkout again to correct sha1
     checkout scm
 
-    sh 'git show-ref --head'
+    sh '''
+      git fetch --all
+
+      # remove non-production tags
+      git tag | grep -v "^[0-9.]*$" | xargs git tag -d
+
+      git checkout master
+      git show-ref
+    '''
   }
 
 }
