@@ -5,13 +5,9 @@ prodRepo = 'git@github.com:afrobot/jenkins-prod.git'
 stage 'build'
   node {
     //checkout scm
-    checkout([
-      $class:'GitSCM',
-      branches: [[name: 'master']],
-      userRemoteConfigs: [
-        [credentialsId: 'github-afrobot', url: "${prodRepo}", name: 'prod']
-      ]])
     sshagent(['github-afrobot']) {
+      addRemoteRepo(prodRepo)
+
       sh """
         git fetch --all
         git show-ref
@@ -21,3 +17,12 @@ stage 'build'
       """
     }
   }
+
+def addRemoteRepo(prodRepo) {
+  checkout([
+    $class:'GitSCM',
+    branches: [[name: 'master']],
+    userRemoteConfigs: [
+      [credentialsId: 'github-afrobot', url: "${prodRepo}", name: 'prod']
+    ]])
+}
