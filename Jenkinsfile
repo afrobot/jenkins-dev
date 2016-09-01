@@ -6,7 +6,7 @@ prodRepo = 'git@github.com:afrobot/jenkins-prod.git'
 node {
   stage("init") {
     checkout scm
-    def utils = load 'utils.groovy'
+    utils = load 'utils.groovy'
     utils.extendEnv()
 
     echo env.FOO
@@ -14,7 +14,7 @@ node {
   }
 
   stage("build") {
-
+    utils.extendEnv()
   }
 
   stage("tests") {
