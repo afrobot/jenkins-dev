@@ -7,7 +7,7 @@ stage 'build'
   node {
     //checkout scm
     sshagent(['github-afrobot']) {
-      git url: 'git@github.com:afrobot/jenkins-dev.git'
+      git url: 'git@github.com:afrobot/jenkins-dev.git', credentialsId: 'github-afrobot'
 
       addRemoteRepo(prodRepo)
 
