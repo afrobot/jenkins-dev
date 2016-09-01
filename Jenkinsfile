@@ -7,7 +7,7 @@ node {
   stage 'checkout'
     checkoutRepo(devRepo, prodRepo)
     checkout scm
-    
+
     // git url: "${prodRepo}", credentialsId: 'github-afrobot', name: 'prod'
 
   stage 'build'
@@ -15,8 +15,6 @@ node {
       sh """
         git fetch --all
         git show-ref
-        git branch
-        git diff origin/master
         git ls-remote
       """ }
 
@@ -47,6 +45,7 @@ def checkoutRepo(devRepo, prodRepo) {
   checkout([
     $class:'GitSCM',
     branches: [[name: 'master']],
+    extensions: [[$class: 'WipeWorkspace']],
     userRemoteConfigs: [
       [credentialsId: 'github-afrobot', url: "${devRepo}",  name: 'origin'],
       [credentialsId: 'github-afrobot', url: "${prodRepo}", name: 'prod']
