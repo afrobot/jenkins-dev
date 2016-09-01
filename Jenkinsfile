@@ -35,6 +35,7 @@ node {
 
         git checkout master
         git show-ref
+        cat .git/config
       '''
     }
   }
