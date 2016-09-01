@@ -5,9 +5,7 @@ stage 'build'
     sshagent(['github-afrobot']) {
       sh """
         git fetch --all
-        git checkout -b master
         git show-ref
-        git tag
       """
     }
   }
