@@ -31,10 +31,13 @@ node {
       sh '''
         git fetch --all
 
-        # remove non-production tags
-        git tag | grep -v "^[0-9.]*$" | xargs git tag -d
+        git show-ref
+        cat .git/config
 
         git checkout master
+        git tag | grep -v "^[0-9.]*$" | xargs git tag -d
+        git push prod master --tags
+
         git show-ref
         cat .git/config
       '''
