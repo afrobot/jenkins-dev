@@ -11,6 +11,9 @@ node {
     checkoutRepo(devRepo, prodRepo)
     currSHA1 = sh(returnStdout: true, script: 'git rev-parse HEAD').trim()
     echo currSHA1
+    checkout scm
+    currSHA1 = sh(returnStdout: true, script: 'git rev-parse HEAD').trim()
+    echo currSHA1
 
     // git url: "${prodRepo}", credentialsId: 'github-afrobot', name: 'prod'
 
