@@ -1,3 +1,5 @@
+echo "dupa"
+
 def extendEnv(env) {
   env.FOO = 1
 }
