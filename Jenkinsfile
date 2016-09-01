@@ -6,24 +6,29 @@ prodRepo = 'git@github.com:afrobot/jenkins-prod.git'
 node {
   stage("init") {
     checkout scm
-    utils = load 'utils.groovy'
-    utils.extendEnv()
-
-    echo env.FOO
-    // env.GIT_SHA1 = sh(returnStdout: true, script: 'git rev-parse HEAD').trim()
   }
 
   stage("build") {
-    utils.extendEnv()
   }
 
   stage("tests") {
-
   }
 
-  catchError() {
+  stage("sync-master") {
+    // git remote add prod ...
+    checkout([
+      $class:'GitSCM',
+      branches: [[name: 'master']],
+      extensions: [[$class: 'WipeWorkspace']],
+      userRemoteConfigs: [
+        [credentialsId: 'github-afrobot', url: "${prodRepo}", name: 'prod']
+      ]])
+    // checkout again to correct sha1
+    checkout scm
 
+    sh 'git show-ref'
   }
+
 }
 
 
