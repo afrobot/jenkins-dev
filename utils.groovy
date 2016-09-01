@@ -13,3 +13,5 @@ def checkoutRepo(devRepo, prodRepo) {
       [credentialsId: 'github-afrobot', url: "${prodRepo}", name: 'prod']
     ]])
 }
+
+this
