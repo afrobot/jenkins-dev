@@ -2,6 +2,8 @@
 
 stage 'build'
   node {
+    checkout scm
+    
     sshagent(['github-afrobot']) {
       sh """
         git fetch --all
