@@ -2,4 +2,6 @@
 
 node {
   echo "Hello World"
+
+  sh "git remote -v"
 }
