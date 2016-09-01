@@ -9,7 +9,7 @@ stage 'build'
       $class:'GitSCM',
       branches: [[name: 'master']],
       userRemoteConfigs: [
-        [credentialsId: 'github-afrobot', url: 'git@github.com:afrobot/jenkins-dev.git', 'production']
+        [credentialsId: 'github-afrobot', url: 'git@github.com:afrobot/jenkins-dev.git', name: 'production']
       ]])
     sshagent(['github-afrobot']) {
       sh """
