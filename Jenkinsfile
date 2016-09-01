@@ -5,10 +5,10 @@ prodRepo = 'git@github.com:afrobot/jenkins-prod.git'
 
 stage 'build'
   node {
-    git url: 'git@github.com:afrobot/jenkins-dev.git'
-
     //checkout scm
     sshagent(['github-afrobot']) {
+      git url: 'git@github.com:afrobot/jenkins-dev.git'
+
       addRemoteRepo(prodRepo)
 
       sh """
