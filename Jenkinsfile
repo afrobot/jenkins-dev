@@ -4,5 +4,7 @@ stage 'build'
   node {
     checkout scm
 
-    echo env.BRANCH_NAME
+    def branch = sh(returnStdout: true, script: 'git rev-parse --abbrev-ref HEAD')
+
+    echo branch
   }
