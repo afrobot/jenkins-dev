@@ -6,8 +6,7 @@ prodRepo = 'git@github.com:afrobot/jenkins-prod.git'
 node {
   stage("bootstrap") {
     checkout scm
-    def utils = load("utils.groovy")
-
+    utils = load("utils.groovy")
     utils.extendEnv(env)
     echo env.FOO
     // env.GIT_SHA1 = sh(returnStdout: true, script: 'git rev-parse HEAD').trim()
