@@ -18,7 +18,7 @@ node {
     // git remote add prod ...
     checkout([
       $class:'GitSCM',
-      branches: [[name: 'master']],
+      // branches: [[name: 'master']],
       extensions: [[$class: 'WipeWorkspace']],
       userRemoteConfigs: [
         [credentialsId: 'github-afrobot', url: "${prodRepo}", name: 'prod']
