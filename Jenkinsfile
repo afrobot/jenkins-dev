@@ -18,7 +18,6 @@ node {
     // git remote add prod ...
     checkout([
       $class:'GitSCM',
-      // branches: [[name: 'master']],
       extensions: [[$class: 'WipeWorkspace']],
       userRemoteConfigs: [
         [credentialsId: 'github-afrobot', url: "${prodRepo}", name: 'prod'],
@@ -30,82 +29,15 @@ node {
     sshagent(['github-afrobot']) {
       sh '''
         git fetch --all
-
-        git show-ref
-        cat .git/config
-
         git checkout master
-        git tag | grep -v "^[0-9.]*$" | xargs git tag -d
-        git push prod master --tags
 
-        git show-ref
-        cat .git/config
+        # remove non-production tags
+        git tag | grep -v "^[0-9.]*$" | xargs git tag -d
+
+        # do the synchronization between origin/master and prod/master
+        git push prod master --tags
       '''
     }
   }
 
 }
-
-
-// node {
-//   stage 'checkout'
-//     checkoutRepo(devRepo, prodRepo)
-//     checkout scm
-//
-//   stage 'build'
-//     sshagent(['github-afrobot']) {
-//       sh """
-//         git fetch --all
-//         git show-ref
-//         git ls-remote
-//       """ }
-//
-// }
-
-
-
-// stage 'build'
-//   node {
-//     //checkout scm
-//     sshagent(['github-afrobot']) {
-//       git url: 'git@github.com:afrobot/jenkins-dev.git', credentialsId: 'github-afrobot', name: 'origin'
-//
-//       addRemoteRepo(prodRepo)
-//
-//       sh """
-//         git fetch --all
-//         git show-ref
-//         git branch
-//         git diff origin/master
-//         git ls-remote
-//       """
-//     }
-//   }
-//   }
-//
-
-// def checkoutRepo(devRepo, prodRepo) {
-//   checkout([
-//     $class:'GitSCM',
-//     branches: [[name: 'master']],
-//     extensions: [[$class: 'WipeWorkspace']],
-//     userRemoteConfigs: [
-//       [credentialsId: 'github-afrobot', url: "${devRepo}",  name: 'origin'],
-//       [credentialsId: 'github-afrobot', url: "${prodRepo}", name: 'prod']
-//     ]])
-// }
-//
-// class Utils {
-//
-// }
-
-
-
-// usuwanie niepotrzebnych developerskich tagow:
-// git tag | grep -v "^[0-9.]*$" | xargs git tag -d
-
-// git fetch --all
-// git show-ref
-// git branch
-// git diff origin/master
-// git ls-remote
