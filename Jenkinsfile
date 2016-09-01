@@ -1,9 +1,12 @@
 #!/usr/bin/env groovy
 
+devRepo = 'git@github.com:afrobot/jenkins-dev.git'
 prodRepo = 'git@github.com:afrobot/jenkins-prod.git'
 
 stage 'build'
   node {
+    git 'git@github.com:afrobot/jenkins-dev.git'
+
     //checkout scm
     sshagent(['github-afrobot']) {
       addRemoteRepo(prodRepo)
