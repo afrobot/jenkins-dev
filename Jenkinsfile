@@ -1,24 +1,49 @@
 #!/usr/bin/env groovy
 
- devRepo = 'git@github.com:afrobot/jenkins-dev.git'
+devRepo = 'git@github.com:afrobot/jenkins-dev.git'
 prodRepo = 'git@github.com:afrobot/jenkins-prod.git'
 
+def utils = load("utils.groovy")
+
 node {
-  stage 'checkout'
-    checkoutRepo(devRepo, prodRepo)
-    checkout scm
+  stage("bootstrap") {
+    utils.extendEnv(env)
+    echo env.FOO
+    // env.GIT_SHA1 = sh(returnStdout: true, script: 'git rev-parse HEAD').trim()
+  }
 
-    // git url: "${prodRepo}", credentialsId: 'github-afrobot', name: 'prod'
+  stage("checkout") {
 
-  stage 'build'
-    sshagent(['github-afrobot']) {
-      sh """
-        git fetch --all
-        git show-ref
-        git ls-remote
-      """ }
+  }
 
+  stage("build") {
+
+  }
+
+  stage("tests") {
+
+  }
+
+  catchError() {
+
+  }
 }
+
+
+// node {
+//   stage 'checkout'
+//     checkoutRepo(devRepo, prodRepo)
+//     checkout scm
+//
+//   stage 'build'
+//     sshagent(['github-afrobot']) {
+//       sh """
+//         git fetch --all
+//         git show-ref
+//         git ls-remote
+//       """ }
+//
+// }
 
 
 
@@ -41,16 +66,26 @@ node {
 //   }
 //   }
 //
-def checkoutRepo(devRepo, prodRepo) {
-  checkout([
-    $class:'GitSCM',
-    branches: [[name: 'master']],
-    extensions: [[$class: 'WipeWorkspace']],
-    userRemoteConfigs: [
-      [credentialsId: 'github-afrobot', url: "${devRepo}",  name: 'origin'],
-      [credentialsId: 'github-afrobot', url: "${prodRepo}", name: 'prod']
-    ]])
-}
+
+// def checkoutRepo(devRepo, prodRepo) {
+//   checkout([
+//     $class:'GitSCM',
+//     branches: [[name: 'master']],
+//     extensions: [[$class: 'WipeWorkspace']],
+//     userRemoteConfigs: [
+//       [credentialsId: 'github-afrobot', url: "${devRepo}",  name: 'origin'],
+//       [credentialsId: 'github-afrobot', url: "${prodRepo}", name: 'prod']
+//     ]])
+// }
+//
+// class Utils {
+//
+// }
+
+
+
+// usuwanie niepotrzebnych developerskich tagow:
+// git tag | grep -v "^[0-9.]*$" | xargs git tag -d
 
 // git fetch --all
 // git show-ref
