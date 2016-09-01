@@ -1,6 +1,6 @@
 #!/usr/bin/env groovy
 
-productionRepo = 'git@github.com:afrobot/jenkins-prod.git'
+prodRepo = 'git@github.com:afrobot/jenkins-prod.git'
 
 stage 'build'
   node {
@@ -9,7 +9,7 @@ stage 'build'
       $class:'GitSCM',
       branches: [[name: 'master']],
       userRemoteConfigs: [
-        [credentialsId: 'github-afrobot', url: 'git@github.com:afrobot/jenkins-dev.git', name: 'production']
+        [credentialsId: 'github-afrobot', url: "${prodRepo}", name: 'prod']
       ]])
     sshagent(['github-afrobot']) {
       sh """
