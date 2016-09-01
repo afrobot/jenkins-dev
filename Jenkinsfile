@@ -15,6 +15,7 @@ node {
         git diff origin/master
         git ls-remote
       """ }
+      
 }
 
 
