@@ -2,5 +2,6 @@
 
 stage 'build'
   node {
+    checkout scm
     sh "env"
   }
