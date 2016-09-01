@@ -3,5 +3,6 @@
 stage 'build'
   node {
     checkout scm
-    sh "env"
+
+    echo ${env.BRANCH_NAME}
   }
