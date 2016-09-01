@@ -1,4 +1,6 @@
 #!/usr/bin/env groovy
 
 stage 'build'
-  sh "env"
+  node {
+    sh "env"
+  }
