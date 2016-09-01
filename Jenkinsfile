@@ -22,6 +22,7 @@ node {
       extensions: [[$class: 'WipeWorkspace']],
       userRemoteConfigs: [
         [credentialsId: 'github-afrobot', url: "${prodRepo}", name: 'prod']
+        [credentialsId: 'github-afrobot', url: "${devRepo}",  name: 'origin']
       ]])
     // checkout again to correct sha1
     checkout scm
