@@ -21,13 +21,13 @@ ws {
         """
       }
     }
+}
 
-  def addRemoteRepo(prodRepo) {
-    checkout([
-      $class:'GitSCM',
-      branches: [[name: 'master']],
-      userRemoteConfigs: [
-        [credentialsId: 'github-afrobot', url: "${prodRepo}", name: 'prod']
-      ]])
-  }
+def addRemoteRepo(prodRepo) {
+  checkout([
+    $class:'GitSCM',
+    branches: [[name: 'master']],
+    userRemoteConfigs: [
+      [credentialsId: 'github-afrobot', url: "${prodRepo}", name: 'prod']
+    ]])
 }
