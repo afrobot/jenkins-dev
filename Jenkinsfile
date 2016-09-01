@@ -5,5 +5,4 @@ stage "build" {
     env.each { name, value -> println "Name: $name -> Value $value" }
     sh "git remote -v"
   }
-
 }
