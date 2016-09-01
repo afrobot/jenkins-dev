@@ -7,6 +7,7 @@ node {
   stage 'checkout'
     checkout scm
     currSHA1 = sh(returnStdout: true, script: 'git rev-parse HEAD').trim()
+    echo currSHA1
     checkoutRepo(devRepo, prodRepo)
 
     // git url: "${prodRepo}", credentialsId: 'github-afrobot', name: 'prod'
