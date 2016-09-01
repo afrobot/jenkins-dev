@@ -8,7 +8,9 @@ stage 'build'
       sh """
         git fetch --all
         git show-ref
+        git branch
         git diff origin/master
+        git ls-remote
       """
     }
   }
