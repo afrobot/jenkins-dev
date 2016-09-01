@@ -2,10 +2,22 @@
 
 prodRepo = 'git@github.com:afrobot/jenkins-prod.git'
 
-stage 'checkout'
-  node {
+node {
+  stage 'checkout'
     git url: "${prodRepo}", credentialsId: 'github-afrobot', name: 'prod'
-  }
+
+  stage 'build'
+    sshagent(['github-afrobot']) {
+      sh """
+        git fetch --all
+        git show-ref
+        git branch
+        git diff origin/master
+        git ls-remote
+      """ }
+}
+
+
 
 // stage 'build'
 //   node {
@@ -14,7 +26,7 @@ stage 'checkout'
 //       git url: 'git@github.com:afrobot/jenkins-dev.git', credentialsId: 'github-afrobot', name: 'origin'
 //
 //       addRemoteRepo(prodRepo)
-// 
+//
 //       sh """
 //         git fetch --all
 //         git show-ref
