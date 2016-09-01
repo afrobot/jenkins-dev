@@ -48,7 +48,7 @@ def checkoutRepo(devRepo, prodRepo) {
     $class:'GitSCM',
     branches: [[name: 'master']],
     userRemoteConfigs: [
-      [credentialsId: 'github-afrobot', url: "${devRepo}",  name: 'origin']
+      [credentialsId: 'github-afrobot', url: "${devRepo}",  name: 'origin'],
       [credentialsId: 'github-afrobot', url: "${prodRepo}", name: 'prod']
     ]])
 }
