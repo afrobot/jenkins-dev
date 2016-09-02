@@ -8,9 +8,6 @@
  * credentialsId - credentials
  */
 
-// devRepo = 'git@github.com:afrobot/jenkins-dev.git'
-// prodRepo = 'git@github.com:afrobot/jenkins-prod.git'
-
 node {
   try {
 
@@ -56,10 +53,11 @@ node {
       }
     }
 
-    env.result = 'SUCCESS'
+    currentBuild.result = 'SUCCESS'
+    echo currentBuild.dump()
 
   } catch(e) {
-    env.result = 'FAILURE'
+    currentBuild.result = 'FAILURE'
     throw(e)
 
   } finally {
