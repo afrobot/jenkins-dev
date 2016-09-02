@@ -54,12 +54,7 @@ node {
       }
     }
 
-    currentBuild.result = 'SUCCESS'
     sh 'do error'
-
-  } catch(e) {
-    currentBuild.result = 'FAILURE'
-    throw(e)
 
   } finally {
     step([$class: 'GitHubCommitStatusSetter', contextSource: [$class: 'ManuallyEnteredCommitContextSource', context: 'jenkins']])
