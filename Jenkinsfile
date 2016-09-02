@@ -1,43 +1,68 @@
 #!/usr/bin/env groovy
 
-devRepo = 'git@github.com:afrobot/jenkins-dev.git'
-prodRepo = 'git@github.com:afrobot/jenkins-prod.git'
+/**
+ * Jenkins job must be parametrized
+ *
+ * devRepo       - url to development version of repo
+ * prodRepo      - url to production version of repo
+ * credentialsId - credentials
+ */
 
-node {
-  stage("init") {
-    checkout scm
-  }
+// devRepo = 'git@github.com:afrobot/jenkins-dev.git'
+// prodRepo = 'git@github.com:afrobot/jenkins-prod.git'
 
+run {
   stage("build") {
   }
 
   stage("tests") {
   }
+}
 
-  stage("sync-master") {
-    // git remote add prod ...
-    checkout([
-      $class:'GitSCM',
-      extensions: [[$class: 'WipeWorkspace']],
-      userRemoteConfigs: [
-        [credentialsId: 'github-afrobot', url: "${prodRepo}", name: 'prod'],
-        [credentialsId: 'github-afrobot', url: "${devRepo}",  name: 'origin']
-      ]])
-    // checkout again to correct sha1
-    checkout scm
+def run(code) {
+  try {
+    node {
+      stage("init") {
+        checkout scm
+        step([$class: 'GitHubCommitStatusSetter', contextSource: [$class: 'ManuallyEnteredCommitContextSource', context: 'jenkins']])
+      }
 
-    sshagent(['github-afrobot']) {
-      sh '''
-        git fetch --all
-        git checkout master
+      code()
 
-        # remove non-production tags
-        git tag | grep -v "^[0-9.]*$" | xargs git tag -d
+      stage("sync-master") {
+        // git remote add prod ...
+        checkout([
+          $class:'GitSCM',
+          extensions: [[$class: 'WipeWorkspace']],
+          userRemoteConfigs: [
+            [credentialsId: credentialsId, url: prodRepo, name: 'prod'],
+            [credentialsId: credentialsId, url: devRepo,  name: 'origin']
+          ]])
+        // checkout again to correct sha1
+        checkout scm
 
-        # do the synchronization between origin/master and prod/master
-        git push prod master --tags
-      '''
+        sshagent([credentialsId]) {
+          sh '''
+            git fetch --all
+            git checkout master
+
+            # remove non-production tags
+            git tag | grep -v "^[0-9.]*$" | xargs git tag -d
+
+            # do the synchronization between origin/master and prod/master
+            git push prod master --tags
+          '''
+        }
+      }
+
+      env.result = 'SUCCESS'
     }
-  }
 
+  } catch(e) {
+    env.result = 'FAILURE'
+    throw(e)
+
+  } finally {
+    step([$class: 'GitHubCommitStatusSetter', contextSource: [$class: 'ManuallyEnteredCommitContextSource', context: 'jenkins']])
+  }
 }
