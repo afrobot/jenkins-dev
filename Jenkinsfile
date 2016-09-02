@@ -20,8 +20,8 @@ run {
 }
 
 def run(code) {
-  try {
-    node {
+  node {
+    try {
       stage("init") {
         checkout scm
         step([$class: 'GitHubCommitStatusSetter', contextSource: [$class: 'ManuallyEnteredCommitContextSource', context: 'jenkins']])
@@ -56,13 +56,14 @@ def run(code) {
       }
 
       env.result = 'SUCCESS'
+
+      } catch(e) {
+        env.result = 'FAILURE'
+        throw(e)
+
+      } finally {
+        step([$class: 'GitHubCommitStatusSetter', contextSource: [$class: 'ManuallyEnteredCommitContextSource', context: 'jenkins']])
+      }
     }
-
-  } catch(e) {
-    env.result = 'FAILURE'
-    throw(e)
-
-  } finally {
-    step([$class: 'GitHubCommitStatusSetter', contextSource: [$class: 'ManuallyEnteredCommitContextSource', context: 'jenkins']])
   }
 }
