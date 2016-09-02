@@ -54,10 +54,18 @@ node {
       }
     }
 
-    sh 'do error'
+    currentBuild.result = 'SUCCESS'
+
+  } catch(e) {
+    currentBuild.result = 'FAILURE'
+    throw(e)
 
   } finally {
-    echo '*********************** WORKS **********************'
-    step([$class: 'GitHubCommitStatusSetter', contextSource: [$class: 'ManuallyEnteredCommitContextSource', context: 'jenkins']])
+
+    stage('cleanup') {
+      sh 'git show-ref --head'
+      step([$class: 'GitHubCommitStatusSetter', contextSource: [$class: 'ManuallyEnteredCommitContextSource', context: 'jenkins']])
+    }
+
   }
 }
