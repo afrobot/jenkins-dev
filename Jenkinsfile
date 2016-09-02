@@ -57,6 +57,7 @@ node {
     sh 'do error'
 
   } finally {
+    echo '*********************** WORKS **********************'
     step([$class: 'GitHubCommitStatusSetter', contextSource: [$class: 'ManuallyEnteredCommitContextSource', context: 'jenkins']])
   }
 }
