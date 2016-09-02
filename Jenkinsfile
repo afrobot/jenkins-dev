@@ -11,7 +11,7 @@
 node {
   try {
 
-    stage('init') {
+    stage('setup') {
       checkout scm
       sh 'git show-ref --head'
       step([$class: 'GitHubCommitStatusSetter', contextSource: [$class: 'ManuallyEnteredCommitContextSource', context: 'jenkins']])
@@ -54,6 +54,7 @@ node {
       }
     }
 
+    error()
     currentBuild.result = 'SUCCESS'
     echo currentBuild.dump()
 
