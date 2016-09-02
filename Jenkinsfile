@@ -57,13 +57,12 @@ def run(code) {
 
       env.result = 'SUCCESS'
 
-      } catch(e) {
-        env.result = 'FAILURE'
-        throw(e)
+    } catch(e) {
+      env.result = 'FAILURE'
+      throw(e)
 
-      } finally {
-        step([$class: 'GitHubCommitStatusSetter', contextSource: [$class: 'ManuallyEnteredCommitContextSource', context: 'jenkins']])
-      }
+    } finally {
+      step([$class: 'GitHubCommitStatusSetter', contextSource: [$class: 'ManuallyEnteredCommitContextSource', context: 'jenkins']])
     }
   }
 }
