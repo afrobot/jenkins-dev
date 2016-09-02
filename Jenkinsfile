@@ -54,9 +54,8 @@ node {
       }
     }
 
-    error()
     currentBuild.result = 'SUCCESS'
-    echo currentBuild.dump()
+    sh 'do error'
 
   } catch(e) {
     currentBuild.result = 'FAILURE'
