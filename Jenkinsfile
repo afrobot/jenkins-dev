@@ -30,15 +30,15 @@ node {
     stage('sync-master') {
       sshagent([credentialsId]) {
         sh """
-          echo $prodRepo
-
-          #git fetch --all
-          #git checkout -b master origin/master
+          git remote add prod $prodRepo
+          git fetch --all
+          git checkout -b master origin/master
 
           # remove non-production tags
-          #git tag | grep -v "^[0-9.]*\$" | xargs git tag -d
+          git tag | grep -v "^[0-9.]*\$" | xargs git tag -d
 
-          #git push prod master --tags
+          git push prod master --tags
+          git remote remove prod
         """
       }
     }
