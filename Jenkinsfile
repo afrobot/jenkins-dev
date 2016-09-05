@@ -31,8 +31,9 @@ node {
 
     stage('sync-master') {
       sshagent([credentialsId]) {
-        sh "git remote add prod $[prodRepo]"
+        sh "git remote add prod ${prodRepo}"
         sh '''
+          echo ${prodRepo}
           git fetch --all
           git checkout master
 
