@@ -31,6 +31,7 @@ node {
       sshagent([credentialsId]) {
         sh '''
           echo "${prodRepo}"
+          
           #git fetch --all
           #git checkout -b master origin/master
 
