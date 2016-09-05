@@ -32,7 +32,6 @@ node {
       sshagent([credentialsId]) {
         sh "git remote add prod ${prodRepo}"
         sh '''
-          echo ${prodRepo}
           git fetch --all
           git checkout -b master origin/master
 
@@ -42,7 +41,7 @@ node {
           # do the synchronization between origin/master and prod/master
           git push prod master --tags
           git remote remove prod
-          sh 'git show-ref --head'
+          git show-ref --head
         '''
       }
     }
