@@ -37,6 +37,7 @@ node {
           # remove non-production tags
           git tag | grep -v "^[0-9.]*$" | xargs git tag -d
 
+          git show-ref --head
           git push prod master --tags
         '''
 
