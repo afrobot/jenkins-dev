@@ -12,6 +12,7 @@ node {
   try {
 
     stage('setup') {
+      checkout scm
       sh 'git show-ref --head'
       step([$class: 'GitHubCommitStatusSetter', contextSource: [$class: 'ManuallyEnteredCommitContextSource', context: 'jenkins']])
     }
