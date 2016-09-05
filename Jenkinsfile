@@ -29,8 +29,8 @@ node {
 
     stage('sync-master') {
       sshagent([credentialsId]) {
-        sh '''
-          echo $prodRepo
+        sh """
+          echo ${prodRepo}
 
           #git fetch --all
           #git checkout -b master origin/master
@@ -39,7 +39,7 @@ node {
           #git tag | grep -v "^[0-9.]*$" | xargs git tag -d
 
           #git push prod master --tags
-        '''
+        """
       }
     }
 
