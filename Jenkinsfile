@@ -13,7 +13,6 @@ node {
 
     stage('setup') {
       checkout scm
-      sh 'git show-ref --head'
       step([$class: 'GitHubCommitStatusSetter', contextSource: [$class: 'ManuallyEnteredCommitContextSource', context: 'jenkins']])
     }
 
@@ -37,23 +36,8 @@ node {
           # remove non-production tags
           git tag | grep -v "^[0-9.]*$" | xargs git tag -d
 
-          git show-ref --head
           git push prod master --tags
         '''
-
-        // sh "git remote add prod ${prodRepo}"
-        // sh '''
-        //   #git fetch --all
-        //   git checkout -b master origin/master
-        //
-        //   # remove non-production tags
-        //   git tag | grep -v "^[0-9.]*$" | xargs git tag -d
-        //
-        //   # do the synchronization between origin/master and prod/master
-        //   git push prod master --tags
-        //   git remote remove prod
-        //   git show-ref --head
-        // '''
       }
     }
 
