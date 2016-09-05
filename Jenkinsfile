@@ -35,7 +35,7 @@ node {
         sh '''
           echo ${prodRepo}
           git fetch --all
-          git checkout origin/master
+          git checkout -b master origin/master
 
           # remove non-production tags
           git tag | grep -v "^[0-9.]*$" | xargs git tag -d
