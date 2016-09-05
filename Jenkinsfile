@@ -31,6 +31,7 @@ node {
 
     stage('sync-master') {
       sshagent([credentialsId]) {
+        echo "${prodRepo}"
         sh '''
           git fetch --all
           git remote add prod ${prodRepo}
@@ -41,7 +42,7 @@ node {
 
           # do the synchronization between origin/master and prod/master
           git push prod master --tags
-
+          git remote remove prod
           sh 'git show-ref --head'
         '''
       }
