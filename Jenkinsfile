@@ -30,7 +30,7 @@ node {
     stage('sync-master') {
       sshagent([credentialsId]) {
         sh """
-          echo ${prodRepo}
+          echo $prodRepo
 
           #git fetch --all
           #git checkout -b master origin/master
